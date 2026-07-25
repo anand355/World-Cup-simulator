@@ -78,7 +78,7 @@ def build_model(df):
     
     # Build cache first - calculate each team's stats once per year
     cache = {}
-    recent = df[df['year'] >= 1990].dropna(subset=['home_score', 'away_score'])
+    recent = df[df['year'] >= 2002].dropna(subset=['home_score', 'away_score'])
     
     teams = set(recent['home_team'].unique()) | set(recent['away_team'].unique())
     years = recent['year'].unique()
@@ -122,8 +122,8 @@ def build_model(df):
     y1 = np.array(y1)
     y2 = np.array(y2)
     
-    model_home = RandomForestRegressor(n_estimators=100, random_state=42)
-    model_away = RandomForestRegressor(n_estimators=100, random_state=42)
+    model_home = RandomForestRegressor(n_estimators=30, random_state=42, max_depth=10)
+    model_away = RandomForestRegressor(n_estimators=30, random_state=42, max_depth=10)
     
     model_home.fit(X, y1)
     model_away.fit(X, y2)
